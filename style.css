@@ -1,0 +1,325 @@
+html {
+  scrollbar-gutter: stable;
+}
+
+body.stop-scroll {
+  /* 라이트박스가 켜졌을 때 스크롤만 막고 레이아웃은 그대로 유지 */
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400; /* 기본 텍스트는 보통 400(Regular)입니다 */
+  font-size: 15px;
+  line-height: 1.2;
+  margin: 0;
+  padding: 0 20px; /* 브라우저 양 끝에서 살짝 띄워줍니다 */
+  background:#f5f6f8;
+  color: black;
+  box-sizing: border-box;
+}
+
+/* 헤더 영역 */
+.header-info {
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 435px;
+}
+
+.header {
+  padding-top: 20px;
+  text-align: center;
+}
+
+.divider {
+  width: 100%;
+  border: none;
+  border-top: 1px solid #c4c5c6;
+  margin: 0;
+}
+
+/* 전체 프로젝트 컨테이너 */
+.projects {
+  padding-top: 0px; /* 선(Divider) 아래의 100px 여백 */
+}
+
+/* 개별 프로젝트 레이아웃 (Grid) */
+.project {
+  display: grid;
+  grid-template-columns: 0.8fr 1.6fr 2.5fr 5.1fr;
+  gap: 18px;
+  padding: 8px 0 80px 0;
+  align-items: start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 텍스트 요소 스타일 */
+.year, .footer-name { 
+  color: #c4c5c6;
+  font-size: 15px; }
+.title { font-weight: 700; font-size: 15px; }
+.description {
+  font-size: 13px;
+  color: #9c9c9c;
+  line-height: 1.4;
+  padding-right: 20px;
+  word-break: keep-all;
+}
+
+/* 이미지 공통 그리드 */
+.grid-3x3, .grid-4x3 {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+}
+.grid-3x3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4x3 { grid-template-columns: repeat(4, 1fr); }
+
+.img-box {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+/* 세로형 이미지 박스 비율 설정 */
+.grid-4x3 .img-box { aspect-ratio: 3 / 4; }
+
+.img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  max-width: 100%;
+  transition: opacity 0.3s ease;
+}
+
+/* 모바일 대응 (통합 및 최적화) */
+@media (max-width: 1000px) {
+
+  .header-name,
+  .header-role,
+  .header-contact {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 2px;
+    color: black;
+  }
+
+  .header-info {
+    margin-bottom: 330px; 
+    text-align: center;
+  }
+  
+
+  .project {
+    display: block !important;
+    width: 100%;
+    padding: 0px 0 60px 0;
+  }
+
+  .year, .title, .description {
+    display: block; /* 각 요소를 한 줄씩 차지하게 함 */
+    width: 100%;
+    position: static; /* 겹침 방지를 위해 위치 고정 해제 */
+    margin-bottom: 10px;
+    padding-right: 0;
+  }
+
+  .description {
+    margin-bottom: 25px; /* 이미지 그리드가 나오기 전 충분한 간격 확보 */
+    line-height: 1.5;
+    color: #666; /* 가독성을 위해 색상 살짝 조정 */
+  }
+
+  .grid-3x3, .grid-4x3 {
+    display: grid !important; /* 이미지는 여전히 그리드 유지 */
+    grid-template-columns: repeat(2, 1fr) !important; /* 무조건 2열 */
+    gap: 10px;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .divider {
+    margin: 10px 0;
+  }
+}
+
+/* 라이트박스 모바일 대응 */
+.lightbox {
+  padding: 20px;
+}
+
+.close-btn {top: 20px; right: 20px;}
+
+/* 라이트 박스 */
+.lightbox {
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f5f6f8;
+  padding: 20px 40px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden; 
+  transition: opacity 0.3s ease-in-out, visibility 0.3s;
+}
+
+#lightbox-img {
+  max-width: 98%;
+  max-height: 92vh;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  opacity: 0;
+  transform: scale(0.97);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease-out;
+}
+
+.lightbox.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox.active #lightbox-img {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 스크롤바 너비를 유지하기 위한 클래스 */
+body.stop-scroll {
+  overflow: hidden;
+}
+
+/* 버튼 공통 스타일 */
+.close-btn, .nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50);
+  z-index: 10002;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.5s ease;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+}
+
+/* 2. 각 버튼의 개별 위치 설정 */
+
+/* < 버튼: 왼쪽 중앙 */
+.prev-btn { left: 20px; }
+
+/* > 버튼: 오른쪽 중앙 (X 버튼이 예전에 있던 그 자리) */
+.next-btn { right: 20px;}
+
+/* X 버튼: 오른쪽 상단 (단, > 버튼과 가로 위치를 맞춤) */
+.close-btn {
+  right: 25px;
+  top: 35px;   /* 상단 여백 */
+}
+
+/* 3. 1px 라인 디자인 및 컬러 (#c4c5c6) */
+
+/* 화살표 모양 (<, >) */
+.nav-btn::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-top: 1px solid #9b9b9b;
+  border-right: 1px solid #9b9b9b;
+  display: block;
+}
+.prev-btn::before { transform: rotate(-135deg); }
+.next-btn::before { transform: rotate(45deg); }
+
+/* X 모양 */
+.close-btn::before, .close-btn::after {
+  content: '';
+  position: absolute;
+  width: 60%;
+  height: 1px;
+  background-color: #9b9b9b;
+}
+.close-btn::before { transform: rotate(45deg); }
+.close-btn::after { transform: rotate(-45deg); }
+
+/* 호버 시 */
+.close-btn:hover, .nav-btn:hover {
+  opacity: 0.5;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* 화면 너비가 768px 이하(태블릿, 모바일)일 때 적용되는 스타일 */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column; /* 세로 배치로 변경 */
+  }
+}
+
+/* --- About Section 스타일 --- */
+
+.about-container {
+  display: grid;
+  grid-template-columns: 0.8fr 1.6fr 2.5fr 5.1fr; 
+  gap: 18px;
+  padding: 100px 0 30px 0; /* 하단에 넉넉한 여백 */
+  align-items: start;
+}
+
+/* 왼쪽 'About' 글자 스타일 (연도나 제목 스타일 활용) */
+.about-label {
+  grid-column: 1;
+  font-weight: 400;
+  font-size: 13px;
+  color: #9c9c9c;
+}
+
+.about-text {
+  grid-column: 4; 
+  font-size: 13px;    
+  font-weight: 400;   
+  color: #9c9c9c;
+  line-height: 1.4;
+  letter-spacing: -0.02em; /* 아까 설정한 자간 적용 */
+  word-break: keep-all;
+}
+
+/* --- 모바일 대응 --- */
+@media (max-width: 1000px) {
+  .about-container {
+    display: block !important; /* 모바일 그리드 해제 */
+    padding: 30px 0 80px 0;
+  }
+
+  .about-label {
+    margin-bottom: 15px;
+    display: block;
+  }
+
+  .about-text {
+    width: 100%;
+    display: block;
+  }
+}
